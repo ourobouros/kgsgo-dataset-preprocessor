@@ -47,12 +47,12 @@ def load_index( dataDirectory ):
         indexpagefile = open( 'cached_indexpage.~html', 'w')
         indexpagefile.write( indexpagecontents )
         indexpagefile.close()
-        os.rename( dataDirectory + 'cached_indexpage.html' )
+        os.rename( 'cached_indexpage.~html', 'cached_indexpage.html' )
 #    print page
     splitpage = indexpagecontents.split('<a href="')
     urls = []
     for downloadUrlBit in splitpage:
-        if downloadUrlBit.startswith( "http://" ):
+        if downloadUrlBit.startswith( "https://" ):
             downloadUrl = downloadUrlBit.split('">Download')[0]
             if downloadUrl.endswith('.zip'):
                 urls.append( downloadUrl )

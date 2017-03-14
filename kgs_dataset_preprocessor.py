@@ -147,12 +147,16 @@ def walkthroughSgf( datafile, sgfContents ):
         (color,move) = it.get_move()
 #        print( 'color ' + str(color) )
 #        print( move )
-        if color != None and move != None:
+        if color != None:
+            if move == None:
+                print("pass")
+                move = (19,0)
             (row,col) = move
             if doneFirstMove and datafile != None:
                 addToDataFile( datafile, color, move, goBoard )
             #print 'applying move ' + str( moveIdx )
-            goBoard.applyMove( color, (row,col) )
+            if row < 19:
+                goBoard.applyMove( color, (row,col) )
             #print goBoard
             moveIdx = moveIdx + 1
             doneFirstMove = True
@@ -314,6 +318,10 @@ def go(sTargetDirectory, iMaxFiles):
     train10k_samples = dataset_partitioner.draw_training_10k( sTargetDirectory )
     zipsToDats( sTargetDirectory, train10k_samples, 'train10k' )
     createSingleDat(sTargetDirectory, 'train10k', train10k_samples )
+    
+    trainall_samples = dataset_partitioner.draw_all_training( sTargetDirectory )
+    zipsToDats( sTargetDirectory, trainall_samples, 'trainall' )
+    createSingleDat(sTargetDirectory, 'trainall', trainall_samples )
     
 if __name__ == '__main__':
     sTargetDirectory = 'data'
